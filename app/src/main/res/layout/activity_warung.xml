@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".warung.WarungActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarwarung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.WithoutActionBar.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarwarung"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.WithoutActionBar.PopUpOverlay" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayoutwarung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabMode="fixed" />
+
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+    <TextView
+        android:id="@+id/txtlevel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"/>
+
+</RelativeLayout>
