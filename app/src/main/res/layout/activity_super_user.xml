@@ -2,30 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    tools:context=".akun.SuperUserActivity">
+    android:orientation="vertical"
+    tools:context=".activity.ActivitySuperUser">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarsuper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.WithoutActionBar.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarsuper"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.WithoutActionBar.PopUpOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-    <TextView
-        android:id="@+id/level"
+    <FrameLayout
+        android:id="@+id/fragment_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"/>
+        android:layout_weight="1"/>
 
+    <android.support.design.widget.BottomNavigationView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:elevation="8dp"
+        app:menu="@menu/menu_bottom_nav" />
 </LinearLayout>

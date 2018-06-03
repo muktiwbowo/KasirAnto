@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".warung.WarungActivity">
+    android:orientation="vertical"
+    tools:context=".activity.ActivityWarung">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarwarung"
@@ -19,24 +20,174 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.WithoutActionBar.PopUpOverlay" />
 
-        <LinearLayout
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<android.support.design.widget.TabLayout-->
+                <!--android:id="@+id/tablayoutwarung"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:tabGravity="fill"-->
+                <!--app:tabMode="fixed" />-->
+
+        <!--</LinearLayout>-->
+    </android.support.design.widget.AppBarLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/white">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayoutwarung"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                app:tabMode="fixed" />
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </android.support.design.widget.AppBarLayout>
-    <TextView
-        android:id="@+id/txtlevel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
-</RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/textnambarang"
+                        android:textColor="@android:color/black" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/warung_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="0"
+                        android:background="@android:color/white"
+                        android:clickable="false"
+                        android:popupBackground="#FFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/textharga"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/warung_harga"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hargaawal"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/textjumlah"
+                        android:textColor="@android:color/black" />
+
+                    <Button
+                        android:id="@+id/warung_btn_kurang"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/warung_jumlah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@android:color/white"
+                        android:inputType="number"
+                        android:text="@string/jumlahawal"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/warung_btn_tambah"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/warung_btn_pesan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_style"
+                    android:text="@string/textbtnproses"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/kafe_txt_totalharga"
+                    android:textColor="#444"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/warung_total_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/hargaawal"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/warung_btn_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/kafe_txt_btndetail"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</LinearLayout>

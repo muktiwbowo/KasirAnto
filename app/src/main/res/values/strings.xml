@@ -13,4 +13,12 @@
     <string name="textjumlah">Jumlah</string>
     <string name="textbtnproses">Pesan</string>
     <string name="textnambarang">Nama Barang</string>
+    <string name="jumlahawal">0</string>
+    <string name="text_btn_bayar">Bayar</string>
+    <string name="kafe_item">Nama Item</string>
+    <string name="kafe_jumlah">Jumlah Item</string>
+    <string name="kafe_total">Total Harga</string>
+    <string name="msg_no_notes">Daftar pesanan kosong</string>
+    <string name="kafe_txt_totalharga">Total</string>
+    <string name="kafe_txt_btndetail">Detail</string>
 </resources>

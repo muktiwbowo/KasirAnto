@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.WithoutActionBar">
-        <activity android:name=".akun.LoginActivity">
+        <activity android:name=".activity.ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,13 +19,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.ActivityMain"
             android:label="@string/title_activity_login" />
-        <activity android:name=".akun.SuperUserActivity" />
-        <activity android:name=".kafe.KafeRenangActivity" />
-        <activity android:name=".kolam.KolamIkanActivity" />
-        <activity android:name=".warung.WarungActivity" />
-        <activity android:name=".toko.TokoActivity"></activity>
+        <activity android:name=".activity.ActivitySuperUser" />
+        <activity android:name=".activity.ActivityKafeRenang" />
+        <activity android:name=".activity.ActivityKolamIkan" />
+        <activity android:name=".activity.ActivityWarung" />
+        <activity android:name=".activity.ActivityToko" />
+        <activity android:name=".activity.ActivityKafeCheckout" />
+        <activity android:name=".activity.ActivityKafeUpdate" />
+        <activity android:name=".activity.ActivityTokoUpdate" />
+        <activity android:name=".activity.ActivityWarungUpdate" />
+        <activity android:name=".activity.ActivityTokoCheckout" />
+        <activity android:name=".activity.ActivityWarungCheckout"></activity>
     </application>
 
 </manifest>
