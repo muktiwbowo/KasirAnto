@@ -42,7 +42,7 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
 
     private String level, password;
     private static final String URL_LOGIN
-            = "https://rainflares.000webhostapp.com/kasiranto/LoginKasir.php";
+            = "http://rainflare.org/kasiranto/LoginKasir.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

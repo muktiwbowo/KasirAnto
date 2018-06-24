@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KasirAnto</string>
+    <string name="app_name">Manneken</string>
     <string name="title_activity_login">Masuk</string>
     <string name="spinnerhint">Pilih User</string>
     <string name="prompt_password">Password</string>
@@ -21,4 +21,8 @@
     <string name="msg_no_notes">Daftar pesanan kosong</string>
     <string name="kafe_txt_totalharga">Total</string>
     <string name="kafe_txt_btndetail">Detail</string>
+    <string name="prompt_re_password">Ulang password</string>
+    <string name="prompt_password_ubah">Password baru</string>
+    <string name="action_simpan">Simpan</string>
+    <string name="msg_no_transaksi">Data kosong</string>
 </resources>

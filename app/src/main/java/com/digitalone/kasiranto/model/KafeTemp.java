@@ -2,7 +2,7 @@ package com.digitalone.kasiranto.model;
 
 public class KafeTemp {
     public static final String TABLE_NAME = "kafe_temps";
-
+    public static final String TABLE_NAME_TiketMasuk = "tiketmasuk_temps";
     public static final String COLUMN_KAFE_ID = "kafe_id";
     public static final String COLUMN_KAFE_ITEM = "kafe_nama";
     public static final String COLUMN_KAFE_JUMLAH = "kafe_jumlah";
@@ -23,6 +23,8 @@ public class KafeTemp {
                     + COLUMN_KAFE_HARGA + " TEXT,"
                     + COLUMN_KAFE_ID_SQL + " INTEGER"
                     + ")";
+
+
 
     public KafeTemp(int kafe_id, String kafe_nama, String kafe_jumlah, String kafe_harga, int kafe_id_sql) {
         this.kafe_id = kafe_id;

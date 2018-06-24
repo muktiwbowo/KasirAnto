@@ -1,49 +1,65 @@
 package com.digitalone.kasiranto.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
 import com.digitalone.kasiranto.R;
+import com.digitalone.kasiranto.fragment.FragmentKafe;
+import com.digitalone.kasiranto.fragment.FragmentKolamIkan;
+import com.digitalone.kasiranto.fragment.FragmentKolamRenang;
+import com.digitalone.kasiranto.adapter.AdapterViewPager;
+import com.digitalone.kasiranto.fragment.FragmentTiketMasuk;
 import com.digitalone.kasiranto.preferences.SessionManager;
 
-import java.util.HashMap;
-
-public class ActivityKolamIkan extends AppCompatActivity {
-
+public class ActivityKolamIkan extends AppCompatActivity implements View.OnClickListener {
     SessionManager session;
-    TextView tLevel;
-    private ProgressDialog pDialog;
-
+    ProgressDialog pDialog;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private Toolbar toolbar;
+    public static Activity fa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kolam);
-        tLevel = findViewById(R.id.txtlevel);
-
+        setContentView(R.layout.activity_kafe);
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tablayoutkafe);
+        toolbar = findViewById(R.id.toolbarkafe);
+        setSupportActionBar(toolbar);
+        fa = this;
         pDialog = new ProgressDialog(this);
         session = new SessionManager(this);
-
-        HashMap<String, String> user = session.getUser();
-        String levelname = user.get(SessionManager.KEY_LEVEL);
 
         pDialog.setCancelable(false);
 
         if (!session.isLoggedIn()) {
             logoutUser();
         }
-        tLevel.setText(levelname);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        AdapterViewPager adapter = new AdapterViewPager(getSupportFragmentManager());
+        adapter.addFragment(new FragmentTiketMasuk(),"TIKET MASUK");
+        adapter.addFragment(new FragmentKolamIkan(),"KOLAM IKAN");
+
+        viewPager.setAdapter(adapter);
     }
 
     private void logoutUser() {
         session.setLogin(false);
         pDialog.setMessage("Logging out ...");
         showDialog();
-        // Launching the login activity
         Intent intent = new Intent(ActivityKolamIkan.this, ActivityLogin.class);
         startActivity(intent);
         hideDialog();
@@ -74,5 +90,10 @@ public class ActivityKolamIkan extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

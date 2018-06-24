@@ -20,7 +20,6 @@ import java.util.List;
 public class AdapterKafe extends RecyclerView.Adapter<AdapterKafe.HolderKafe> {
     private List<KafeItem> items;
     private Context context;
-    private DecimalFormat fRupiah;
 
     public AdapterKafe(List<KafeItem> items, Context context) {
         this.items = items;

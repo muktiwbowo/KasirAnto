@@ -6,7 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.digitalone.kasiranto.model.Kafe;
 import com.digitalone.kasiranto.model.KafeTemp;
+import com.digitalone.kasiranto.model.KolamIkan;
+import com.digitalone.kasiranto.model.KolamIkanTemp;
+import com.digitalone.kasiranto.model.KolamRenang;
+import com.digitalone.kasiranto.model.KolamRenangTemp;
+import com.digitalone.kasiranto.model.TiketMasuk;
+import com.digitalone.kasiranto.model.TiketMasukTemp;
 import com.digitalone.kasiranto.model.Toko;
 import com.digitalone.kasiranto.model.TokoTemp;
 import com.digitalone.kasiranto.model.WarungTemp;
@@ -28,6 +35,11 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(KafeTemp.CREATE_TABLE);
             db.execSQL(TokoTemp.CREATE_TABLE_TOKO);
             db.execSQL(WarungTemp.CREATE_TABLE_WARUNG);
+            db.execSQL(TiketMasukTemp.CREATE_TABLE_tiketmasuk);
+            db.execSQL(KolamIkanTemp.CREATE_TABLE);
+            db.execSQL(KolamRenangTemp.CREATE_TABLE_kolamrenang);
+
+
     }
 
     @Override
@@ -39,12 +51,33 @@ public class DBHelper extends SQLiteOpenHelper {
                 db.execSQL("DROP TABLE IF EXISTS " + TokoTemp.TABLE_TOKO_NAME);
             case 3:
                 db.execSQL("DROP TABLE IF EXISTS " + WarungTemp.TABLE_WARUNG_NAME);
+            case 4:
+                db.execSQL("DROP TABLE IF EXISTS " + TiketMasukTemp.TABLE_NAME_TiketMasuk);
+            case 5:
+                db.execSQL("DROP TABLE IF EXISTS " + KolamIkanTemp.TABLE_NAME);
+            case 6 :
+                db.execSQL("DROP TABLE IF EXISTS " + KolamRenangTemp.TABLE_NAME);
                 break;
             default:
                 throw new IllegalStateException(
                         "onUpgrade() with unknown oldVersion " + oldVersion);
         }
         onCreate(db);
+    }
+    public long insertKolamrenang(String nama, String jumlah, String harga, int kafeid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KolamRenangTemp.COLUMN_KAFE_ITEM, nama);
+        values.put(KolamRenangTemp.COLUMN_KAFE_JUMLAH, jumlah);
+        values.put(KolamRenangTemp.COLUMN_KAFE_HARGA, harga);
+        values.put(KolamRenangTemp.COLUMN_KAFE_ID_SQL, kafeid);
+
+        long id = db.insert(KolamRenangTemp.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
     }
 
     public long insertKafe(String nama, String jumlah, String harga, int kafeid) {
@@ -62,7 +95,107 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return id;
     }
+    public long insertKolamIkan(String nama, String jumlah, String harga, int kafeid) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(KafeTemp.COLUMN_KAFE_ITEM, nama);
+        values.put(KafeTemp.COLUMN_KAFE_JUMLAH, jumlah);
+        values.put(KafeTemp.COLUMN_KAFE_HARGA, harga);
+        values.put(KafeTemp.COLUMN_KAFE_ID_SQL, kafeid);
+
+        long id = db.insert(KolamIkanTemp.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+    public long insertTiketMasuk(String nama, String jumlah, String harga, int kafeid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KafeTemp.COLUMN_KAFE_ITEM, nama);
+        values.put(KafeTemp.COLUMN_KAFE_JUMLAH, jumlah);
+        values.put(KafeTemp.COLUMN_KAFE_HARGA, harga);
+        values.put(KafeTemp.COLUMN_KAFE_ID_SQL, kafeid);
+
+        long id = db.insert(TiketMasukTemp.TABLE_NAME_TiketMasuk, null, values);
+
+        db.close();
+
+        return id;
+    }
+    public void deleteallTiketMasuk(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE FROM " + TiketMasukTemp.TABLE_NAME_TiketMasuk);
+        db.close();
+    }
+    public void deleteallKolamRenang(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE FROM " + KolamRenangTemp.TABLE_NAME);
+        db.close();
+    }
+    public void deleteallKolamIkan(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE FROM " + KolamIkanTemp.TABLE_NAME);
+        db.close();
+    }
+    public void deleteallToko(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE FROM " + TokoTemp.TABLE_TOKO_NAME);
+        db.close();
+    }
+    public void deleteallWarung(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE FROM " + WarungTemp.TABLE_WARUNG_NAME);
+        db.close();
+    }
+
+    public void deleteItemkolamikan(KolamIkanTemp kolam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(KolamIkanTemp.TABLE_NAME, KolamIkanTemp.COLUMN_KAFE_ID + " = ?",
+                new String[]{String.valueOf(kolam.getKafe_id())});
+        db.close();
+    }
+    public void deleteItemKafe(KafeTemp kolam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(KafeTemp.TABLE_NAME, KafeTemp.COLUMN_KAFE_ID + " = ?",
+                new String[]{String.valueOf(kolam.getKafe_id())});
+        db.close();
+    }
+    public void deleteItemKolamrenang(KolamRenangTemp kolam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(KolamRenangTemp.TABLE_NAME, KolamRenangTemp.COLUMN_KAFE_ID + " = ?",
+                new String[]{String.valueOf(kolam.getKafe_id())});
+        db.close();
+    }
+    public void deleteitemTiketmasuk(TiketMasukTemp kolam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TiketMasukTemp.TABLE_NAME_TiketMasuk, TiketMasukTemp.COLUMN_KAFE_ID + " = ?",
+                new String[]{String.valueOf(kolam.getKafe_id())});
+        db.close();
+    }
+    public void deleteitemWarung(WarungTemp kolam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(WarungTemp.TABLE_WARUNG_NAME, WarungTemp.COLUMN_WARUNG_ID + " = ?",
+                new String[]{String.valueOf(kolam.getWarung_id())});
+        db.close();
+    }
     public long insertToko(String nama, String jumlah, String harga, int tokoid) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -164,6 +297,78 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return temps;
     }
+    public List<KolamIkanTemp> getAllKolamIkanTemps() {
+        List<KolamIkanTemp> temps = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + KolamIkanTemp.TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                KolamIkanTemp kafeTemp = new KolamIkanTemp();
+                kafeTemp.setKafe_id(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID)));
+                kafeTemp.setKafe_nama(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ITEM)));
+                kafeTemp.setKafe_jumlah(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_JUMLAH)));
+                kafeTemp.setKafe_harga(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_HARGA)));
+                kafeTemp.setKafe_id_sql(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID_SQL)));
+                temps.add(kafeTemp);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return temps;
+    }
+    public List<TiketMasukTemp> getAllTiketmasukTemps() {
+        List<TiketMasukTemp> temps = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + KafeTemp.TABLE_NAME_TiketMasuk;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TiketMasukTemp tiketMasukTemp = new TiketMasukTemp();
+                tiketMasukTemp.setKafe_id(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID)));
+                tiketMasukTemp.setKafe_nama(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ITEM)));
+                tiketMasukTemp.setKafe_jumlah(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_JUMLAH)));
+                tiketMasukTemp.setKafe_harga(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_HARGA)));
+                tiketMasukTemp.setKafe_id_sql(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID_SQL)));
+                temps.add(tiketMasukTemp);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return temps;
+    }
+    public List<KolamRenangTemp> getAllKolamRenangTemps() {
+        List<KolamRenangTemp> temps = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + KolamRenangTemp.TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                KolamRenangTemp tiketMasukTemp = new KolamRenangTemp();
+                tiketMasukTemp.setKafe_id(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID)));
+                tiketMasukTemp.setKafe_nama(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ITEM)));
+                tiketMasukTemp.setKafe_jumlah(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_JUMLAH)));
+                tiketMasukTemp.setKafe_harga(cursor.getString(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_HARGA)));
+                tiketMasukTemp.setKafe_id_sql(cursor.getInt(cursor.getColumnIndex(KafeTemp.COLUMN_KAFE_ID_SQL)));
+                temps.add(tiketMasukTemp);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return temps;
+    }
 
     public List<TokoTemp> getAllTokoTemps() {
         List<TokoTemp> temps = new ArrayList<>();
@@ -225,7 +430,36 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return count;
     }
+    public int getTiketTempsCount() {
+        String countQuery = "SELECT  * FROM " + KafeTemp.TABLE_NAME_TiketMasuk;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
 
+        int count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+    public int getKolamRenangTempsCount() {
+        String countQuery = "SELECT  * FROM " + KolamRenangTemp.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+    public int getKolamIkanTempsCount() {
+        String countQuery = "SELECT  * FROM " + KolamIkanTemp.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
     public int getTokoTempsCount() {
         String countQuery = "SELECT  * FROM " + TokoTemp.TABLE_TOKO_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -246,6 +480,14 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return count;
+    }
+
+    public void deleteAllKafe(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(KafeTemp.TABLE_NAME, null, null);
+        db.execSQL("DELETE FROM " + KafeTemp.TABLE_NAME);
+        db.execSQL("VACUUM");
+        db.close();
     }
 
     public void deleteKafeTemps(KafeTemp temp) {

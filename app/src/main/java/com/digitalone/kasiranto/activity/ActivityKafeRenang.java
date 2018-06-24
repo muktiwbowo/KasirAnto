@@ -1,5 +1,6 @@
 package com.digitalone.kasiranto.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -13,41 +14,34 @@ import android.view.View;
 
 import com.digitalone.kasiranto.R;
 import com.digitalone.kasiranto.fragment.FragmentKafe;
-import com.digitalone.kasiranto.fragment.FragmentRenang;
+import com.digitalone.kasiranto.fragment.FragmentKolamRenang;
 import com.digitalone.kasiranto.adapter.AdapterViewPager;
 import com.digitalone.kasiranto.preferences.SessionManager;
 
 public class ActivityKafeRenang extends AppCompatActivity implements View.OnClickListener {
     SessionManager session;
     ProgressDialog pDialog;
-    //TextView txtLevel;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private Toolbar toolbar;
-
-
+    public static Activity fa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kafe);
-  //      txtLevel = findViewById(R.id.txtlevel);
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tablayoutkafe);
         toolbar = findViewById(R.id.toolbarkafe);
         setSupportActionBar(toolbar);
-        
+        fa = this;
         pDialog = new ProgressDialog(this);
         session = new SessionManager(this);
-
-//        HashMap<String, String> user = session.getUser();
-//        String levelname = user.get(SessionManager.KEY_LEVEL);
 
         pDialog.setCancelable(false);
 
         if (!session.isLoggedIn()) {
             logoutUser();
         }
-//        txtLevel.setText(levelname);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -55,7 +49,8 @@ public class ActivityKafeRenang extends AppCompatActivity implements View.OnClic
     private void setupViewPager(ViewPager viewPager) {
         AdapterViewPager adapter = new AdapterViewPager(getSupportFragmentManager());
         adapter.addFragment(new FragmentKafe(),"Kafe");
-        adapter.addFragment(new FragmentRenang(),"Kolam Renang");
+        adapter.addFragment(new FragmentKolamRenang(),"Kolam Renang");
+
         viewPager.setAdapter(adapter);
     }
 

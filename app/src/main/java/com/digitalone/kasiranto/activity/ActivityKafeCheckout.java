@@ -1,11 +1,13 @@
 package com.digitalone.kasiranto.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +20,21 @@ import com.digitalone.kasiranto.adapter.AdapterKafeTemp;
 import com.digitalone.kasiranto.model.AdminMessage;
 import com.digitalone.kasiranto.model.KafeTemp;
 import com.digitalone.kasiranto.service.RestAPIHelper;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.CharArrayReader;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +51,6 @@ public class ActivityKafeCheckout extends AppCompatActivity implements View.OnCl
     private Toolbar toolBar;
     private TextView noItemsView;
     private Button btnCheckout;
-    JSONArray arrayItems;
     DBHelper db;
 
     @Override
@@ -48,7 +59,7 @@ public class ActivityKafeCheckout extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_kafe_checkout);
         initViews();
         getPesanan();
-        convertToJSONArray();
+        //convertToJSONArray();
     }
 
     public void initViews() {
@@ -79,26 +90,18 @@ public class ActivityKafeCheckout extends AppCompatActivity implements View.OnCl
         temps.addAll(db.getAllKafeTemps());
     }
 
-    public void convertToJSONArray(){
-        ArrayList<KafeTemp> items = (ArrayList<KafeTemp>) db.getAllKafeTemps();
-        JSONArray arrayItems = new JSONArray();
-        for (KafeTemp temp: items){
-            JSONObject obj = new JSONObject();
-            try {
-                //obj.put("kafe_id", temp.getKafe_id());
-                obj.put("kt_jumlah", temp.getKafe_jumlah());
-                obj.put("kt_total", temp.getKafe_harga());
-                obj.put("kafe_id", temp.getKafe_id_sql());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            arrayItems.put(obj);
-        }
-
-    }
-
     private void insertPesanan(){
-        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).ordered(arrayItems);
+        ArrayList<KafeTemp> items = (ArrayList<KafeTemp>) db.getAllKafeTemps();
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<KafeTemp>>() {}.getType());
+        if (! element.isJsonArray()){
+            Log.d("tes", "gagal");
+        }
+        JsonArray jsonArray = element.getAsJsonArray();
+        JsonObject object = new JsonObject();
+        object.getAsJsonObject(String.valueOf(jsonArray));
+
+        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).ordered(jsonArray);
         call.enqueue(new Callback<AdminMessage>() {
             @Override
             public void onResponse(@NonNull Call<AdminMessage> call, @NonNull Response<AdminMessage> response) {
@@ -117,7 +120,7 @@ public class ActivityKafeCheckout extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(@NonNull Call<AdminMessage> call, @NonNull Throwable t) {
-                Toast.makeText(ActivityKafeCheckout.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityKafeCheckout.this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -135,7 +138,19 @@ public class ActivityKafeCheckout extends AppCompatActivity implements View.OnCl
         switch (v.getId()){
             case R.id.btn_checkout:
                 insertPesanan();
+                db.deleteAllKafe();
+                initViews();
+                getPesanan();
+                ActivityKafeRenang.fa.finish();
+                Intent myintent = new Intent(this,ActivityKafeRenang.class);
+                startActivity(myintent);
+                finish();
+                //convertToJSONArray();
                 break;
         }
+    }
+    public  void refresh(){
+        initViews();
+        getPesanan();
     }
 }

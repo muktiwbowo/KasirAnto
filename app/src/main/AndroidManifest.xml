@@ -23,7 +23,6 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".activity.ActivitySuperUser" />
         <activity android:name=".activity.ActivityKafeRenang" />
-        <activity android:name=".activity.ActivityKolamIkan" />
         <activity android:name=".activity.ActivityWarung" />
         <activity android:name=".activity.ActivityToko" />
         <activity android:name=".activity.ActivityKafeCheckout" />
@@ -31,7 +30,18 @@
         <activity android:name=".activity.ActivityTokoUpdate" />
         <activity android:name=".activity.ActivityWarungUpdate" />
         <activity android:name=".activity.ActivityTokoCheckout" />
-        <activity android:name=".activity.ActivityWarungCheckout"></activity>
+        <activity android:name=".activity.ActivityWarungCheckout" />
+        <activity android:name=".activity.ActivityTiketMasukCheckout" />
+        <activity android:name=".activity.ActivityKolamIkanCheckout" />
+        <activity android:name=".activity.ActivityKolamIkan" />
+        <activity android:name=".activity.ActivityKolamRenangCheckout" />
+        <activity android:name=".activity.ActivityFilter" />
+        <activity android:name=".activity.ActivityFilterToko" />
+        <activity android:name=".activity.ActivityFilterWarung"/>
+        <activity android:name=".activity.ActivityUbahPassword"/>
+        <activity android:name=".activity.ActivityKolamIkanUpdate"/>
+        <activity android:name=".activity.ActivityTiketMasukUpdate"/>
+        <activity android:name=".activity.ActivityKolamRenangUpdate"/>
     </application>
 
 </manifest>

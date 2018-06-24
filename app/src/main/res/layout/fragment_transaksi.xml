@@ -19,5 +19,23 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.WithoutActionBar.PopUpOverlay" />
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabtransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            app:tabGravity="fill"/>
+
     </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/content_transaksi"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabfilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_search"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 </android.support.design.widget.CoordinatorLayout>

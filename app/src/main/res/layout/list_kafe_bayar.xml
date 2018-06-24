@@ -33,4 +33,14 @@
         android:layout_weight="1"
         android:gravity="center" />
 
+    <TextView
+        android:id="@+id/hapus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Hapus"
+android:textStyle="bold"
+        android:textColor="#273c75"/>
+
 </LinearLayout>

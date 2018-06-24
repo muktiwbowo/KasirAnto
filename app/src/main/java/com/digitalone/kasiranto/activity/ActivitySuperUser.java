@@ -76,7 +76,7 @@ public class ActivitySuperUser extends AppCompatActivity implements BottomNaviga
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -85,6 +85,9 @@ public class ActivitySuperUser extends AppCompatActivity implements BottomNaviga
         switch (item.getItemId()){
             case R.id.keluar:
                 logoutUser();
+                break;
+            case R.id.ubah_password:
+                startActivity(new Intent(ActivitySuperUser.this, ActivityUbahPassword.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

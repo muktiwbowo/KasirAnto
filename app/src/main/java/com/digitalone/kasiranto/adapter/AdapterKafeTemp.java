@@ -9,13 +9,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.digitalone.kasiranto.R;
+import com.digitalone.kasiranto.activity.ActivityKafeCheckout;
+import com.digitalone.kasiranto.activity.ActivityKolamIkanCheckout;
+import com.digitalone.kasiranto.fragment.FragmentKafe;
+import com.digitalone.kasiranto.fragment.FragmentKolamIkan;
+import com.digitalone.kasiranto.helper.DBHelper;
 import com.digitalone.kasiranto.model.KafeTemp;
 
 import java.util.List;
 
 public class AdapterKafeTemp extends RecyclerView.Adapter<AdapterKafeTemp.ListTemp> {
     private List<KafeTemp> items;
-    private Context context;
+    private Context context = null;
+    private DBHelper helper ;
 
     public AdapterKafeTemp(List<KafeTemp> items, Context context) {
         this.items = items;
@@ -25,6 +31,7 @@ public class AdapterKafeTemp extends RecyclerView.Adapter<AdapterKafeTemp.ListTe
     @NonNull
     @Override
     public AdapterKafeTemp.ListTemp onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        helper = new DBHelper(context);
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_kafe_bayar, parent, false);
         return new ListTemp(view);
@@ -32,12 +39,24 @@ public class AdapterKafeTemp extends RecyclerView.Adapter<AdapterKafeTemp.ListTe
 
     @Override
     public void onBindViewHolder(@NonNull AdapterKafeTemp.ListTemp holder, int position) {
-        KafeTemp kafeItem = items.get(position);
+        final KafeTemp kafeItem = items.get(position);
         holder.txtId.setText(String.valueOf(kafeItem.getKafe_id_sql()));
         holder.txtId.setVisibility(View.GONE);
         holder.txtNama.setText(kafeItem.getKafe_nama());
         holder.txtJumlah.setText(kafeItem.getKafe_jumlah());
         holder.txtHarga.setText(kafeItem.getKafe_harga());
+        holder.hapus.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                FragmentKafe.totaldetail = FragmentKafe.totaldetail - Integer.parseInt(kafeItem.getKafe_harga());
+                helper.deleteItemKafe(kafeItem);
+                helper.getAllKafeTemps();
+
+                ((ActivityKafeCheckout)context).refresh();
+            }
+        });
     }
 
     @Override
@@ -46,13 +65,14 @@ public class AdapterKafeTemp extends RecyclerView.Adapter<AdapterKafeTemp.ListTe
     }
 
     class ListTemp extends RecyclerView.ViewHolder{
-        private TextView txtNama, txtJumlah, txtHarga, txtId;
+        private TextView txtNama, txtJumlah, txtHarga, txtId,hapus;
         public ListTemp(View itemView) {
             super(itemView);
             txtNama = itemView.findViewById(R.id.temp_kafe_item);
             txtJumlah = itemView.findViewById(R.id.temp_kafe_jumlah);
             txtHarga = itemView.findViewById(R.id.temp_kafe_harga);
             txtId = itemView.findViewById(R.id.temp_kafe_id);
+            hapus = itemView.findViewById(R.id.hapus);
         }
     }
 }

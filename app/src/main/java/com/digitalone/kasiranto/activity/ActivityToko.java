@@ -1,5 +1,6 @@
 package com.digitalone.kasiranto.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -35,8 +36,8 @@ public class ActivityToko extends AppCompatActivity implements View.OnClickListe
     private int                     total,
                                     harga,
                                     jumlah,
-                                    totaldetail,
                                     toko_id;
+    public  static  int             totaldetail;
     private String                  nama;
     private SearchableSpinner       tokoSpinner;
     private TextView                tokoHarga,
@@ -55,6 +56,7 @@ public class ActivityToko extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Integer>      hargaList,
                                     idList;
     private ArrayAdapter<String>    adapter;
+    public static Activity fa ;
     private DBHelper                db;
 
     @Override
@@ -63,6 +65,7 @@ public class ActivityToko extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_toko);
         initView();
         getTokos();
+        fa = this;
     }
 
     private void initView(){
@@ -235,4 +238,9 @@ public class ActivityToko extends AppCompatActivity implements View.OnClickListe
             pDialog.dismiss();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tampilTotal(totaldetail);
+    }
 }

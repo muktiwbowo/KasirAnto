@@ -1,5 +1,6 @@
 package com.digitalone.kasiranto.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -60,15 +61,18 @@ public class ActivityWarung extends AppCompatActivity implements View.OnClickLis
             idList;
     private ArrayAdapter<String> adapter;
     private DBHelper db;
+    public static Activity fa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warung);
+
         initView();
         getWarungs();
+        fa = this;
     }
-
     private void initView(){
         total           = 0;
         harga           = 0;
@@ -237,5 +241,11 @@ public class ActivityWarung extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tampilTotal(totaldetail);
     }
 }

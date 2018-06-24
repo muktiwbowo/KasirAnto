@@ -162,18 +162,18 @@ public class FragmentAdminToko extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onRefresh() {
-        items.clear();
-        adapterToko.notifyDataSetChanged();
-        getTokos();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fabtoko:
                 dialogForm();
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        items.clear();
+        adapterToko.notifyDataSetChanged();
+        getTokos();
     }
 }

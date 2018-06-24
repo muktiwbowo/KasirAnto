@@ -37,7 +37,8 @@ import retrofit2.Response;
  */
 public class FragmentKafe extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
-    private int                     total, hargaBarang, jumlah, totaldetail;
+    private int                     total, hargaBarang, jumlah;
+    public  static int  totaldetail;
     private int                     kafe_id;
     private String                  nama;
     private DBHelper db;
@@ -188,6 +189,12 @@ public class FragmentKafe extends Fragment implements View.OnClickListener, Adap
             jumlah = 0;
             tampilJumlah(jumlah);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tampilTotalDetail(totaldetail);
     }
 
     @Override
