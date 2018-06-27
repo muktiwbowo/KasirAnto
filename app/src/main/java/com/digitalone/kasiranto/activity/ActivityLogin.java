@@ -42,7 +42,7 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
 
     private String level, password;
     private static final String URL_LOGIN
-            = "http://rainflare.org/kasiranto/LoginKasir.php";
+            = "https://fcmskripsweet.000webhostapp.com/kasiranto/LoginKasir.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,12 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
         btnMasuk = findViewById(R.id.btn_masuk);
         spinnerLevel.setOnItemSelectedListener(this);
         List<String> levelitems = new ArrayList<>();
-        levelitems.add("Select User");
+        levelitems.add("Pilih Pengguna");
         levelitems.add("Superuser");
         levelitems.add("Toko");
         levelitems.add("Warung");
-        levelitems.add("KafeRenang");
-        levelitems.add("KolamIkan");
+        levelitems.add("Cafe / Kolam Renang");
+        levelitems.add("Penginapan / Pemancingan");
         ArrayAdapter<String> levelAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,levelitems);
         levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLevel.setAdapter(levelAdapter);
@@ -90,10 +90,10 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
             }else if (session.getLevel().equals("Warung")){
                 startActivity(new Intent(ActivityLogin.this, ActivityWarung.class));
                 finish();
-            }else if (session.getLevel().equals("KafeRenang")){
+            }else if (session.getLevel().equals("Cafe / Kolam Renang")){
                 startActivity(new Intent(ActivityLogin.this, ActivityKafeRenang.class));
                 finish();
-            }else if (session.getLevel().equals("KolamIkan")){
+            }else if (session.getLevel().equals("Penginapan / Pemancingan")){
                 startActivity(new Intent(ActivityLogin.this, ActivityKolamIkan.class));
                 finish();
             }
@@ -103,7 +103,7 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         level = parent.getItemAtPosition(position).toString();
-        if (level.equals("Select User")){
+        if (level.equals("Pilih Pengguna")){
             return;
         }else {
         }
@@ -111,11 +111,11 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(this, "Please select your level status", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Pilih salah satu terlebih dahulu", Toast.LENGTH_SHORT).show();
     }
 
     private void loadLogin(final String level, final String password) {
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage("Loading ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -149,11 +149,11 @@ public class ActivityLogin extends AppCompatActivity implements AdapterView.OnIt
                                 startActivity(new Intent(ActivityLogin.this, ActivityWarung.class));
                                 finish();
                                 break;
-                            case "KafeRenang":
+                            case "Cafe / Kolam Renang":
                                 startActivity(new Intent(ActivityLogin.this, ActivityKafeRenang.class));
                                 finish();
                                 break;
-                            case "KolamIkan":
+                            case "Penginapan / Pemancingan":
                                 startActivity(new Intent(ActivityLogin.this, ActivityKolamIkan.class));
                                 finish();
                                 break;

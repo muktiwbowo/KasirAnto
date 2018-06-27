@@ -101,7 +101,7 @@ public class FragmentWarung extends Fragment implements View.OnClickListener, Ad
     }
 
     public void initSpinner(){
-        retrofit2.Call<Warung> call = RestAPIHelper.ServiceApi(getActivity().getApplication()).getWarungfr();
+        retrofit2.Call<Warung> call = RestAPIHelper.ServiceApi(getActivity().getApplication()).getWarung();
         call.enqueue(new Callback<Warung>() {
             @Override
             public void onResponse(@NonNull Call<Warung> call, @NonNull Response<Warung> response) {
@@ -125,7 +125,7 @@ public class FragmentWarung extends Fragment implements View.OnClickListener, Ad
             @Override
             public void onFailure(Call<Warung> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("loadKafes","Error on Failure" + t.getMessage());
+                Log.e("loadWarungs","Error on Failure" + t.getMessage());
             }
         });
     }

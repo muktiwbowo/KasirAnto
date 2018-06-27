@@ -12,7 +12,7 @@ import com.digitalone.kasiranto.fragment.FragmentTransaksiToko;
 import com.digitalone.kasiranto.fragment.FragmentTransaksiWarung;
 
 public class AdapterViewPagerTransaksi extends FragmentStatePagerAdapter {
-    private static int TAB_COUNT = 5;
+    private static int TAB_COUNT = 4;
 
     public AdapterViewPagerTransaksi(FragmentManager fm) {
         super(fm);
