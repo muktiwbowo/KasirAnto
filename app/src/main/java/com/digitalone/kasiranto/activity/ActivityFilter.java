@@ -27,6 +27,7 @@ import com.digitalone.kasiranto.adapter.AdapterKolamIkanDate;
 import com.digitalone.kasiranto.adapter.AdapterKolamRenangDate;
 import com.digitalone.kasiranto.adapter.AdapterTiketMasukDate;
 import com.digitalone.kasiranto.adapter.AdapterTokoDate;
+import com.digitalone.kasiranto.adapter.AdapterTransaksi;
 import com.digitalone.kasiranto.adapter.AdapterWarungDate;
 import com.digitalone.kasiranto.model.KafeDate;
 import com.digitalone.kasiranto.model.KafeDateItem;
@@ -40,6 +41,8 @@ import com.digitalone.kasiranto.model.TiketMasukDate;
 import com.digitalone.kasiranto.model.TiketMasukDateItem;
 import com.digitalone.kasiranto.model.TokoDate;
 import com.digitalone.kasiranto.model.TokoDateItem;
+import com.digitalone.kasiranto.model.Transaksi;
+import com.digitalone.kasiranto.model.TransaksiItem;
 import com.digitalone.kasiranto.model.WarungDate;
 import com.digitalone.kasiranto.model.WarungDateItem;
 import com.digitalone.kasiranto.service.RestAPIHelper;
@@ -62,17 +65,19 @@ import retrofit2.Response;
 
 public class ActivityFilter extends AppCompatActivity implements View.OnClickListener{
     private TextView            txtDari, txtKe, totalFilter;
-    private Button              btnCariKafe, btnCariToko, btnCariWarung,btncarikolamikan, btnkolamrenang,btntiketmasuk;
+    private Button              btnCariKafe, btnCariToko, btnCariWarung,btncarikolamikan, btnkolamrenang,btntiketmasuk, btnCariSemua;
     private LinearLayout        btnDari, btnKe;
     private DatePickerDialog dateFrom, dateTo;
     private SimpleDateFormat dateFormatter, dateToFormatter;
     private SwipeRefreshLayout  refreshLayout;
+    private List<TransaksiItem> allitems;
     private List<KafeDateItem>  items;
     private List<KolamrenangDateItem> itemskolamrenang;
     private List<TokoDateItem>  tokoDateItems;
     private List<KolamIkanDateItem> kolamIkanDateItems;
     private List<WarungDateItem> warungDateItems;
     private List<TiketMasukDateItem>    tiketMasukDateItems;
+    private AdapterTransaksi        adapterTransaksi;
     private AdapterTiketMasukDate       adapterTiketMasukDate;
     private AdapterKafeDate     adapterKafeDate;
     private AdapterTokoDate     adapterTokoDate;
@@ -82,8 +87,8 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
     private RecyclerView        recyclerView;
     private Toolbar             toolBar;
     private String              dari, ke;
-    private int                 total, totaltoko, totalwarung,totalkolamikan,totalkolamrenang, totaltiketmasuk;
-    private String              totalfilter, totalfiltertoko, totalfilterwarung, totalfilterkolamikan,totalfilterkolamrenang, totalfiltertiketmasuk;
+    private int                 total, totaltoko, totalwarung,totalkolamikan,totalkolamrenang, totaltiketmasuk, totalall;
+    private String              totalfilter, totalfiltertoko, totalfilterwarung, totalfilterkolamikan,totalfilterkolamrenang, totalfiltertiketmasuk, totalfilterall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,29 +98,32 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initView(){
-        total       = 0;
-        totaltoko   = 0;
-        totalkolamikan = 0;
-        totalwarung = 0;
-        toolBar     = findViewById(R.id.toolbarfilter);
+        totalall        = 0;
+        total           = 0;
+        totaltoko       = 0;
+        totalkolamikan  = 0;
+        totalwarung     = 0;
+        toolBar         = findViewById(R.id.toolbarfilter);
         setSupportActionBar(toolBar);
         getSupportActionBar().setTitle("Filter Transaksi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnCariKafe     = findViewById(R.id.btn_cari_kafe);
         btnCariToko     = findViewById(R.id.btn_cari_toko);
         btnCariWarung   = findViewById(R.id.btn_cari_warung);
-        txtDari     = findViewById(R.id.fromkafe);
-        txtKe       = findViewById(R.id.tokafe);
-        totalFilter = findViewById(R.id.totalfilter);
-        btnDari     = findViewById(R.id.btn_from_kafe);
-        btnKe       = findViewById(R.id.btn_to_kafe);
+        btnCariSemua    = findViewById(R.id.btn_cari_semua);
+        txtDari         = findViewById(R.id.fromkafe);
+        txtKe           = findViewById(R.id.tokafe);
+        totalFilter     = findViewById(R.id.totalfilter);
+        btnDari         = findViewById(R.id.btn_from_kafe);
+        btnKe           = findViewById(R.id.btn_to_kafe);
         refreshLayout   = findViewById(R.id.refreshfilter);
         btncarikolamikan = findViewById(R.id.btn_cari_kolamikan);
         btntiketmasuk   = findViewById(R.id.btn_cari_tiketMasuk);
         recyclerView    = findViewById(R.id.recyclefilter);
-        btnkolamrenang = findViewById(R.id.btn_cari_KolamRenang);
+        btnkolamrenang  = findViewById(R.id.btn_cari_KolamRenang);
         items           = new ArrayList<>();
         tiketMasukDateItems = new ArrayList<>();
+        allitems        = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -124,6 +132,7 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
         btnDari.setOnClickListener(this);
         btnCariToko.setOnClickListener(this);
         btnCariWarung.setOnClickListener(this);
+        btnCariSemua.setOnClickListener(this);
         btnKe.setOnClickListener(this);
         btnCariKafe.setOnClickListener(this);
         btncarikolamikan.setOnClickListener(this);
@@ -357,6 +366,35 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+    private void getAll(String from, String to){
+        retrofit2.Call<Transaksi> call = RestAPIHelper.ServiceApi(getApplication()).getAllTransaksi(from, to);
+        call.enqueue(new Callback<Transaksi>() {
+            @Override
+            public void onResponse(Call<Transaksi> call, Response<Transaksi> response) {
+                if (response.body() != null){
+                    boolean error = response.body().getError();
+                    if (!error){
+                        allitems = response.body().getTransaksi();
+                        for (int i=0; i<allitems.size(); i++){
+                            totalfilterall  = allitems.get(i).getTTotal();
+                            totalall        = totalall + Integer.parseInt(totalfilterall);
+                        }
+                        totalFilter.setText(String.valueOf(totalall));
+                        adapterTransaksi    = new AdapterTransaksi(allitems, getApplicationContext());
+                        recyclerView.setAdapter(adapterTransaksi);
+                    }
+                }
+                refreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<Transaksi> call, Throwable t) {
+                Log.e(ActivityFilter.class.getSimpleName(),t.getMessage());
+                Toast.makeText(ActivityFilter.this, "onFailure", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -365,6 +403,12 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btn_to_kafe:
                 showDateTo();
+                break;
+            case R.id.btn_cari_semua:
+                refreshLayout.setRefreshing(true);
+                getAll(dari, ke);
+                totalall = 0;
+                totalFilter.setText(String.valueOf(totalall));
                 break;
             case R.id.btn_cari_kafe:
                 refreshLayout.setRefreshing(true);

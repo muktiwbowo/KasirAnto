@@ -113,10 +113,45 @@ public class ActivityTiketMasukCheckout extends AppCompatActivity implements Vie
                     boolean error = response.body().getError();
                     String message = response.body().getMsg();
                     if (error == false) {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityTiketMasukCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityTiketMasukCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityTiketMasukCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityTiketMasukCheckout.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AdminMessage> call, @NonNull Throwable t) {
+                Toast.makeText(ActivityTiketMasukCheckout.this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void insertAllTransaksi(){
+        ArrayList<TiketMasukTemp> items = (ArrayList<TiketMasukTemp>) db.getAllTiketmasukTemps();
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<KafeTemp>>() {}.getType());
+        if (! element.isJsonArray()){
+            Log.d("tes", "gagal");
+        }
+        JsonArray jsonArray = element.getAsJsonArray();
+        JsonObject object = new JsonObject();
+        object.getAsJsonObject(String.valueOf(jsonArray));
+
+        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).transaksiAllTiketMasuk(jsonArray);
+        call.enqueue(new Callback<AdminMessage>() {
+            @Override
+            public void onResponse(@NonNull Call<AdminMessage> call, @NonNull Response<AdminMessage> response) {
+                if (response.body() != null) {
+                    boolean error = response.body().getError();
+                    String message = response.body().getMsg();
+                    if (error == false) {
+                        Log.v(ActivityTiketMasukCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityTiketMasukCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.v(ActivityTiketMasukCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityTiketMasukCheckout.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -147,6 +182,7 @@ public class ActivityTiketMasukCheckout extends AppCompatActivity implements Vie
         switch (v.getId()){
             case R.id.btn_checkout:
                 insertPesanan();
+                insertAllTransaksi();
                 db.deleteallTiketMasuk();
                 //convertToJSONArray();
                 initViews();

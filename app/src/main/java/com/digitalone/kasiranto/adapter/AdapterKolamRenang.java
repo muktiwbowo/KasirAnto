@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.digitalone.kasiranto.R;
 import com.digitalone.kasiranto.activity.ActivityKafeUpdate;
+import com.digitalone.kasiranto.activity.ActivityKolamRenangUpdate;
 import com.digitalone.kasiranto.model.KafeItem;
 import com.digitalone.kasiranto.model.KolamIkanItem;
 import com.digitalone.kasiranto.model.KolamRenangItem;
@@ -69,7 +70,7 @@ public class AdapterKolamRenang extends RecyclerView.Adapter<AdapterKolamRenang.
             String nama     = txtNama.getText().toString();
             String harga    = txtHarga.getText().toString();
             String stok     = txtStok.getText().toString();
-            Intent intent = new Intent(context, ActivityKafeUpdate.class);
+            Intent intent = new Intent(context, ActivityKolamRenangUpdate.class);
             intent.putExtra("id", id);
             intent.putExtra("nama", nama);
             intent.putExtra("harga", harga);

@@ -117,10 +117,46 @@ public class ActivityKolamRenangCheckout extends AppCompatActivity implements Vi
                     boolean error = response.body().getError();
                     String message = response.body().getMsg();
                     if (error == false) {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityKolamRenangCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityKolamRenangCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityKolamRenangCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityKolamRenangCheckout.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AdminMessage> call, @NonNull Throwable t) {
+                Toast.makeText(ActivityKolamRenangCheckout.this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void insertAllTransaksi(){
+        ArrayList<KolamRenangTemp> items = (ArrayList< KolamRenangTemp>) db.getAllKolamRenangTemps();
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<KolamRenangTemp>>() {}.getType());
+        if (! element.isJsonArray()){
+            Log.d("tes", "gagal");
+        }
+        JsonArray jsonArray = element.getAsJsonArray();
+        JsonObject object = new JsonObject();
+        object.getAsJsonObject(String.valueOf(jsonArray));
+
+        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).transaksiAllKolamRenang(jsonArray);
+
+        call.enqueue(new Callback<AdminMessage>() {
+            @Override
+            public void onResponse(@NonNull Call<AdminMessage> call, @NonNull Response<AdminMessage> response) {
+                if (response.body() != null) {
+                    boolean error = response.body().getError();
+                    String message = response.body().getMsg();
+                    if (error == false) {
+                        Log.v(ActivityKolamRenangCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityKolamRenangCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.v(ActivityKolamRenangCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityKolamRenangCheckout.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -152,6 +188,7 @@ public class ActivityKolamRenangCheckout extends AppCompatActivity implements Vi
         switch (v.getId()){
             case R.id.btn_checkout:
                 insertPesanan();
+                insertAllTransaksi();
                 db.deleteallKolamRenang();
                 //convertToJSONArray();
                 initViews();

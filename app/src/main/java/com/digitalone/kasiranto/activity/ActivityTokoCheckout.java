@@ -109,6 +109,54 @@ public class ActivityTokoCheckout extends AppCompatActivity implements View.OnCl
         });
     }
 
+    private void insertAllTransaksi(){
+        ArrayList<TokoTemp> items = (ArrayList<TokoTemp>) db.getAllTokoTemps();
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<TokoTemp>>() {}.getType());
+        if (! element.isJsonArray()){
+            Log.d("tes", "gagal");
+        }
+        JsonArray jsonArray = element.getAsJsonArray();
+        JsonObject object = new JsonObject();
+        object.getAsJsonObject(String.valueOf(jsonArray));
+
+        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).transaksiAllToko(jsonArray);
+        call.enqueue(new Callback<AdminMessage>() {
+            @Override
+            public void onResponse(@NonNull Call<AdminMessage> call, @NonNull Response<AdminMessage> response) {
+                if (response.body() != null) {
+                    boolean error = response.body().getError();
+                    String message = response.body().getMsg();
+                    if (error == false) {
+                        Log.v(ActivityTokoCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityTokoCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.v(ActivityTokoCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityTokoCheckout.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AdminMessage> call, @NonNull Throwable t) {
+                Toast.makeText(ActivityTokoCheckout.this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+//    private void test(){
+//        ArrayList<TokoTemp> items = (ArrayList<TokoTemp>) db.getAllTokoTemps();
+//        Gson gson = new Gson();
+//        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<TokoTemp>>() {}.getType());
+//        if (! element.isJsonArray()){
+//            Log.d("tes", "gagal");
+//        }
+//        JsonArray jsonArray = element.getAsJsonArray();
+//        JsonObject object = new JsonObject();
+//        object.getAsJsonObject(String.valueOf(jsonArray));
+//        Log.d("nyoba", String.valueOf(jsonArray));
+//    }
+
     public void getPesanan() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvTemp.setLayoutManager(layoutManager);
@@ -130,7 +178,9 @@ public class ActivityTokoCheckout extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_checkout_toko:
+                //test();
                 insertPesanan();
+                insertAllTransaksi();
                 db.deleteallToko();
                 initViews();
                 getPesanan();
@@ -139,7 +189,6 @@ public class ActivityTokoCheckout extends AppCompatActivity implements View.OnCl
                 Intent myIntent = new Intent(ActivityTokoCheckout.this, ActivityToko.class);
                 startActivity(myIntent);
                 finish();
-                //convertToJSONArray();
                 break;
         }
     }

@@ -41,11 +41,11 @@ public class AdapterKolamIkanTemp extends RecyclerView.Adapter<AdapterKolamIkanT
     public void onBindViewHolder(@NonNull final AdapterKolamIkanTemp.ListTemp holder, final int position) {
         final KolamIkanTemp kafeItem = items.get(position);
 
-        holder.txtId.setText(String.valueOf(kafeItem.getKafe_id_sql()));
+        holder.txtId.setText(String.valueOf(kafeItem.getKolamIkan_id()));
         holder.txtId.setVisibility(View.GONE);
-        holder.txtNama.setText(kafeItem.getKafe_nama());
-        holder.txtJumlah.setText(kafeItem.getKafe_jumlah());
-        holder.txtHarga.setText(kafeItem.getKafe_harga());
+        holder.txtNama.setText(kafeItem.getKolamIkan_nama());
+        holder.txtJumlah.setText(kafeItem.getKolamIkan_jumlah());
+        holder.txtHarga.setText(kafeItem.getKolamIkan_harga());
 
        
         holder.hapuss.setOnClickListener(new View.OnClickListener(){
@@ -53,7 +53,7 @@ public class AdapterKolamIkanTemp extends RecyclerView.Adapter<AdapterKolamIkanT
             @Override
             public void onClick(View v) {
 
-                  FragmentKolamIkan.totaldetail = FragmentKolamIkan.totaldetail - Integer.parseInt(kafeItem.getKafe_harga());
+                  FragmentKolamIkan.totaldetail = FragmentKolamIkan.totaldetail - Integer.parseInt(kafeItem.getKolamIkan_harga());
                    dbHelper.deleteItemkolamikan(kafeItem);
                    dbHelper.getAllKolamIkanTemps();
                    ActivityKolamIkanCheckout.trigger = 0;

@@ -103,7 +103,6 @@ public class ActivityKolamRenangUpdate extends AppCompatActivity implements View
             case R.id.toko_btn_update:
                 updateKolamIkan(edtId.getText().toString(), edtNama.getText().toString(),
                         edtHarga.getText().toString());
-
                 break;
             case R.id.toko_btn_hapus:
                 deleteKolamIkan(edtId.getText().toString());

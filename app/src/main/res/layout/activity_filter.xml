@@ -84,6 +84,22 @@
         android:padding="6dp">
 
         <Button
+            android:id="@+id/btn_cari_semua"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="SEMUA TRANSAKSI"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="6dp">
+
+        <Button
             android:id="@+id/btn_cari_kafe"
             android:layout_width="wrap_content"
             android:layout_height="45dp"

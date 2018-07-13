@@ -1,79 +1,79 @@
 package com.digitalone.kasiranto.model;
 
 public class KolamRenangTemp {
-    public static final String TABLE_NAME = "kolamrenang_temps";
+    public static final String TABLE_RENANG_NAME = "kolamrenang_temps";
 //    public static final String TABLE_NAME_TiketMasuk = "tiketmasuk_temps";
-    public static final String COLUMN_KAFE_ID = "kafe_id";
-    public static final String COLUMN_KAFE_ITEM = "kafe_nama";
-    public static final String COLUMN_KAFE_JUMLAH = "kafe_jumlah";
-    public static final String COLUMN_KAFE_HARGA = "kafe_harga";
-    public static final String COLUMN_KAFE_ID_SQL = "kafe_id_sql";
+    public static final String COLUMN_KOLAM_RENANG_ID = "kolamrenang_id";
+    public static final String COLUMN_KOLAM_RENANG_ITEM = "kolamrenang_nama";
+    public static final String COLUMN_KOLAM_RENANG_JUMLAH = "kolamrenang_jumlah";
+    public static final String COLUMN_KOLAM_RENANG_HARGA = "kolamrenang_harga";
+    public static final String COLUMN_KOLAM_RENANG_ID_SQL = "kolamrenang_id_sql";
 
-    private int kafe_id;
-    private String kafe_nama;
-    private String kafe_jumlah;
-    private String kafe_harga;
-    private int kafe_id_sql;
+    private int kolamrenang_id;
+    private String kolamrenang_nama;
+    private String kolamrenang_jumlah;
+    private String kolamrenang_harga;
+    private int kolamrenang_id_sql;
 
 
 
-    public static final String CREATE_TABLE_kolamrenang =
-            "CREATE TABLE " + TABLE_NAME + "("
-                    + COLUMN_KAFE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_KAFE_ITEM + " TEXT,"
-                    + COLUMN_KAFE_JUMLAH + " TEXT,"
-                    + COLUMN_KAFE_HARGA + " TEXT,"
-                    + COLUMN_KAFE_ID_SQL + " INTEGER"
+    public static final String CREATE_TABLE_KOLAMRENANG =
+            "CREATE TABLE " + TABLE_RENANG_NAME + "("
+                    + COLUMN_KOLAM_RENANG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_KOLAM_RENANG_ITEM + " TEXT,"
+                    + COLUMN_KOLAM_RENANG_JUMLAH + " TEXT,"
+                    + COLUMN_KOLAM_RENANG_HARGA + " TEXT,"
+                    + COLUMN_KOLAM_RENANG_ID_SQL + " INTEGER"
                     + ")";
 
-    public KolamRenangTemp(int kafe_id, String kafe_nama, String kafe_jumlah, String kafe_harga, int kafe_id_sql) {
-        this.kafe_id = kafe_id;
-        this.kafe_nama = kafe_nama;
-        this.kafe_jumlah = kafe_jumlah;
-        this.kafe_harga = kafe_harga;
-        this.kafe_id_sql = kafe_id_sql;
+    public KolamRenangTemp(int kolamrenang_id, String kolamrenang_nama, String kolamrenang_jumlah, String kolamrenang_harga, int kolamrenang_id_sql) {
+        this.kolamrenang_id = kolamrenang_id;
+        this.kolamrenang_nama = kolamrenang_nama;
+        this.kolamrenang_jumlah = kolamrenang_jumlah;
+        this.kolamrenang_harga = kolamrenang_harga;
+        this.kolamrenang_id_sql = kolamrenang_id_sql;
     }
 
     public KolamRenangTemp() {
     }
 
-    public int getKafe_id() {
-        return kafe_id;
+    public int getKolamRenang_id() {
+        return kolamrenang_id;
     }
 
-    public void setKafe_id(int kafe_id) {
-        this.kafe_id = kafe_id;
+    public void setKolamRenang_id(int kolamrenang_id) {
+        this.kolamrenang_id = kolamrenang_id;
     }
 
-    public String getKafe_nama() {
-        return kafe_nama;
+    public String getKolamRenang_nama() {
+        return kolamrenang_nama;
     }
 
-    public void setKafe_nama(String kafe_nama) {
-        this.kafe_nama = kafe_nama;
+    public void setKolamRenang_nama(String kolamrenang_nama) {
+        this.kolamrenang_nama = kolamrenang_nama;
     }
 
-    public String getKafe_jumlah() {
-        return kafe_jumlah;
+    public String getKolamRenang_jumlah() {
+        return kolamrenang_jumlah;
     }
 
-    public void setKafe_jumlah(String kafe_jumlah) {
-        this.kafe_jumlah = kafe_jumlah;
+    public void setKolamRenang_jumlah(String kolamrenang_jumlah) {
+        this.kolamrenang_jumlah = kolamrenang_jumlah;
     }
 
-    public String getKafe_harga() {
-        return kafe_harga;
+    public String getKolamRenang_harga() {
+        return kolamrenang_harga;
     }
 
-    public void setKafe_harga(String kafe_harga) {
-        this.kafe_harga = kafe_harga;
+    public void setKolamRenang_harga(String kolamrenang_harga) {
+        this.kolamrenang_harga = kolamrenang_harga;
     }
 
-    public int getKafe_id_sql() {
-        return kafe_id_sql;
+    public int getKolamRenang_id_sql() {
+        return kolamrenang_id_sql;
     }
 
-    public void setKafe_id_sql(int kafe_id_sql) {
-        this.kafe_id_sql = kafe_id_sql;
+    public void setKolamRenang_id_sql(int kolamrenang_id_sql) {
+        this.kolamrenang_id_sql = kolamrenang_id_sql;
     }
 }

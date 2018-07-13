@@ -120,11 +120,47 @@ public class ActivityKolamIkanCheckout extends AppCompatActivity implements View
                     boolean error = response.body().getError();
                     String message = response.body().getMsg();
                     if (error == false) {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityKolamIkanCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityKolamIkanCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Log.v(ActivityKafeCheckout.class.getSimpleName(), message);
+                        Log.v(ActivityKolamIkanCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityKolamIkanCheckout.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AdminMessage> call, @NonNull Throwable t) {
+                Toast.makeText(ActivityKolamIkanCheckout.this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void insertAllTransaksi(){
+        ArrayList<KolamIkanTemp> items = (ArrayList<KolamIkanTemp>) db.getAllKolamIkanTemps();
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(items, new TypeToken<ArrayList<KolamIkanTemp>>() {}.getType());
+        if (! element.isJsonArray()){
+            Log.d("tes", "gagal");
+        }
+        JsonArray jsonArray = element.getAsJsonArray();
+        JsonObject object = new JsonObject();
+        object.getAsJsonObject(String.valueOf(jsonArray));
+
+        retrofit2.Call<AdminMessage> call = RestAPIHelper.ServiceApi(getApplication()).transaksiAllKolamIkan(jsonArray);
+        call.enqueue(new Callback<AdminMessage>() {
+            @Override
+            public void onResponse(@NonNull Call<AdminMessage> call, @NonNull Response<AdminMessage> response) {
+                if (response.body() != null) {
+                    boolean error = response.body().getError();
+                    String message = response.body().getMsg();
+                    if (error == false) {
+                        Log.v(ActivityKolamIkanCheckout.class.getSimpleName(), message);
+                        Toast.makeText(ActivityKolamIkanCheckout.this, "Transaksi berhasil disimpan", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Log.v(ActivityKolamIkanCheckout.class.getSimpleName(), message);
                         Toast.makeText(ActivityKolamIkanCheckout.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -150,6 +186,7 @@ public class ActivityKolamIkanCheckout extends AppCompatActivity implements View
         switch (v.getId()){
             case R.id.btn_checkout:
                 insertPesanan();
+                insertAllTransaksi();
                 db.deleteallKolamIkan();
 
                 initViews();

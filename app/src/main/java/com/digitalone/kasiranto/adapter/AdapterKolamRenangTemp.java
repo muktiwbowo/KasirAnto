@@ -47,16 +47,16 @@ public class AdapterKolamRenangTemp extends RecyclerView.Adapter<AdapterKolamRen
     public void onBindViewHolder(@NonNull AdapterKolamRenangTemp.ListTemp holder, int position) {
         final KolamRenangTemp kafeItem = items.get(position);
 
-        holder.txtId.setText(String.valueOf(kafeItem.getKafe_id_sql()));
+        holder.txtId.setText(String.valueOf(kafeItem.getKolamRenang_id()));
         holder.txtId.setVisibility(View.GONE);
-        holder.txtNama.setText(kafeItem.getKafe_nama());
-        holder.txtJumlah.setText(kafeItem.getKafe_jumlah());
-        holder.txtHarga.setText(kafeItem.getKafe_harga());
+        holder.txtNama.setText(kafeItem.getKolamRenang_nama());
+        holder.txtJumlah.setText(kafeItem.getKolamRenang_jumlah());
+        holder.txtHarga.setText(kafeItem.getKolamRenang_harga());
         holder.hapuss.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                FragmentKolamRenang.totaldetail = FragmentKolamRenang.totaldetail - Integer.parseInt(kafeItem.getKafe_harga());
+                FragmentKolamRenang.totaldetail = FragmentKolamRenang.totaldetail - Integer.parseInt(kafeItem.getKolamRenang_harga());
                 dbHelper.deleteItemKolamrenang(kafeItem);
                 dbHelper.getAllKolamRenangTemps();
                 ((ActivityKolamRenangCheckout)context).refresh();

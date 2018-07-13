@@ -14,6 +14,7 @@ import com.digitalone.kasiranto.model.TiketMasukDate;
 import com.digitalone.kasiranto.model.Toko;
 import com.digitalone.kasiranto.model.TokoDate;
 import com.digitalone.kasiranto.model.TokoTransaksi;
+import com.digitalone.kasiranto.model.Transaksi;
 import com.digitalone.kasiranto.model.Warung;
 import com.digitalone.kasiranto.model.WarungDate;
 import com.digitalone.kasiranto.model.WarungTransaksi;
@@ -27,7 +28,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface APIService {
-    String BASE_URL = "https://fcmskripsweet.000webhostapp.com/";
+    String BASE_URL = "http://rainflare.org/";
 
 
     /**                 Area Kafe                  **/
@@ -224,5 +225,30 @@ public interface APIService {
     @POST("kasiranto/UpdatePassword.php")
     Call<AdminMessage> updatePassword(@Field("password") String password,
                                       @Field("id") String id);
+
+    /**                 AREA ALL TRANSAKSI                  **/
+
+    @POST("kasiranto/InsertAllTokoTransaksi.php")
+    Call<AdminMessage> transaksiAllToko(@Body JsonArray array_items);
+
+    @POST("kasiranto/InsertAllKafeTransaksi.php")
+    Call<AdminMessage> transaksiAllKafe(@Body JsonArray array_items);
+
+    @POST("kasiranto/InsertAllWarungTransaksi.php")
+    Call<AdminMessage> transaksiAllWarung(@Body JsonArray array_items);
+
+    @POST("kasiranto/InsertAllKolamRenangTransaksi.php")
+    Call<AdminMessage> transaksiAllKolamRenang(@Body JsonArray array_items);
+
+    @POST("kasiranto/InsertAllTiketMasukTransaksi.php")
+    Call<AdminMessage> transaksiAllTiketMasuk(@Body JsonArray array_items);
+
+    @POST("kasiranto/InsertAllKolamIkanTransaksi.php")
+    Call<AdminMessage> transaksiAllKolamIkan(@Body JsonArray array_items);
+
+    @FormUrlEncoded
+    @POST("kasiranto/GetAllTransaksi.php")
+    Call<Transaksi> getAllTransaksi(@Field("from") String from, @Field("to") String to);
+
 
 }
